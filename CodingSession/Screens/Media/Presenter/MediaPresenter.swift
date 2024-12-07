@@ -9,9 +9,11 @@ import Photos
 import UIKit
 
 protocol MediaPresentable {
-    func loadMediaAssets() -> [PHAsset]
-    func getImage(for asset: PHAsset, completion: @escaping (UIImage?) -> Void)
-    func getTitle(for asset: PHAsset) -> String?
+    var assetsCount: Int { get }
+
+    func loadMediaAssets()
+    func getImage(for indexPath: IndexPath, size: CGSize, completion: @escaping (UIImage?) -> Void)
+    func getTitle(for indexPath: IndexPath) -> String?
 }
 
 class MediaPresenter: MediaPresentable {
@@ -24,37 +26,40 @@ class MediaPresenter: MediaPresentable {
         return formatter
     }()
 
-    let mediaService: MediaService
-    weak var view: MediaViewController?
+    private let mediaService: MediaService
+    private weak var view: MediaViewController?
+    private var assets: [PHAsset] = []
 
     init(mediaService: MediaService, view: MediaViewController) {
         self.mediaService = mediaService
         self.view = view
     }
 
-    func loadMediaAssets() -> [PHAsset] {
-        let assets = mediaService.loadMediaAssets()
-        return assets
+    var assetsCount: Int {
+        assets.count
     }
 
-    func getImage(for asset: PHAsset, completion: @escaping (UIImage?) -> Void) {
-        let manager = PHImageManager.default()
-        let requestOptions = PHImageRequestOptions()
-        requestOptions.isSynchronous = false
-        requestOptions.deliveryMode = .highQualityFormat
-
-        let targetSize = CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width / 3)  // Размер изображения. Вы можете установить другой размер, если нужно меньшее разрешение для превью.
-
-        manager.requestImage(
-                for: asset,
-                targetSize: targetSize,
-                contentMode: .aspectFill,
-                options: requestOptions) { (image, _) in
-                    completion(image)
+    func loadMediaAssets() {
+        view?.state = .loading
+        mediaService.loadMediaAssets { [weak self] assets in
+            self?.assets = assets
+            if assets.isEmpty {
+                self?.view?.state = .empty
+            } else {
+                self?.view?.state = .loaded
+            }
         }
     }
 
-    func getTitle(for asset: PHAsset) -> String? {
+    func getImage(for indexPath: IndexPath, size: CGSize, completion: @escaping (UIImage?) -> Void) {
+        let asset = assets[indexPath.item]
+        mediaService.getImage(for: asset, size: size) { image in
+            completion(image)
+        }
+    }
+
+    func getTitle(for indexPath: IndexPath) -> String? {
+        let asset = assets[indexPath.item]
         return Self.formatter.string(from: asset.duration)
     }
 }

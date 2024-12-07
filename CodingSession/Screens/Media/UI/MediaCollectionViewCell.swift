@@ -21,19 +21,6 @@ final class MediaCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    //TODO: remove this
-    var image: UIImage! {
-        didSet {
-            thumbImageView.image = image
-        }
-    }
-    
-    var title: String! {
-        didSet {
-            durationLabel.text = title
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -43,6 +30,12 @@ final class MediaCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        set(image: nil)
+        set(title: nil)
     }
 
     private func setup() {
@@ -58,5 +51,13 @@ final class MediaCollectionViewCell: UICollectionViewCell {
             make.leading.equalTo(8)
             make.bottom.equalTo(-8)
         }
+    }
+
+    func set(image: UIImage?) {
+        thumbImageView.image = image
+    }
+
+    func set(title: String?) {
+        durationLabel.text = title
     }
 }

@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C05A0C7C2D0460D000F59A93 /* PhotoCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C7B2D0460BF00F59A93 /* PhotoCollectionViewLayout.swift */; };
+		C05A0C7C2D0460D000F59A93 /* MediaCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C7B2D0460BF00F59A93 /* MediaCollectionViewLayout.swift */; };
 		C05A0C7E2D04673500F59A93 /* MediaCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C7D2D04673500F59A93 /* MediaCollectionViewCell.swift */; };
 		C05A0C802D046A1E00F59A93 /* AppLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C7F2D046A1A00F59A93 /* AppLauncher.swift */; };
 		C05A0C822D046E6100F59A93 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C812D046E5E00F59A93 /* ReusableView.swift */; };
+		C05A0C852D04706000F59A93 /* MediaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C842D04705C00F59A93 /* MediaService.swift */; };
+		C05A0C8B2D04722800F59A93 /* MediaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C8A2D04722500F59A93 /* MediaPresenter.swift */; };
+		C05A0C8E2D04733900F59A93 /* ScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C8D2D04733300F59A93 /* ScreenFactory.swift */; };
 		D3D03FB52AF27571006BD5C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */; };
 		D3D03FB72AF27571006BD5C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */; };
-		D3D03FB92AF27571006BD5C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB82AF27571006BD5C8 /* ViewController.swift */; };
+		D3D03FB92AF27571006BD5C8 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB82AF27571006BD5C8 /* MediaViewController.swift */; };
 		D3D03FBE2AF27572006BD5C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3D03FBD2AF27572006BD5C8 /* Assets.xcassets */; };
 		D3D03FC12AF27572006BD5C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3D03FBF2AF27572006BD5C8 /* LaunchScreen.storyboard */; };
 		D3D03FCA2AF2758E006BD5C8 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3D03FC92AF2758E006BD5C8 /* SnapKit */; };
@@ -23,14 +26,17 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C05A0C7B2D0460BF00F59A93 /* PhotoCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewLayout.swift; sourceTree = "<group>"; };
+		C05A0C7B2D0460BF00F59A93 /* MediaCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewLayout.swift; sourceTree = "<group>"; };
 		C05A0C7D2D04673500F59A93 /* MediaCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaCollectionViewCell.swift; sourceTree = "<group>"; };
 		C05A0C7F2D046A1A00F59A93 /* AppLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLauncher.swift; sourceTree = "<group>"; };
 		C05A0C812D046E5E00F59A93 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
+		C05A0C842D04705C00F59A93 /* MediaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaService.swift; sourceTree = "<group>"; };
+		C05A0C8A2D04722500F59A93 /* MediaPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPresenter.swift; sourceTree = "<group>"; };
+		C05A0C8D2D04733300F59A93 /* ScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenFactory.swift; sourceTree = "<group>"; };
 		D3D03FB12AF27571006BD5C8 /* CodingSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingSession.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D3D03FB82AF27571006BD5C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D3D03FB82AF27571006BD5C8 /* MediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewController.swift; sourceTree = "<group>"; };
 		D3D03FBD2AF27572006BD5C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3D03FC02AF27572006BD5C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D3D03FC22AF27572006BD5C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,12 +61,69 @@
 		C05A0C7A2D0460B400F59A93 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				C05A0C812D046E5E00F59A93 /* ReusableView.swift */,
 				C05A0C7D2D04673500F59A93 /* MediaCollectionViewCell.swift */,
-				C05A0C7B2D0460BF00F59A93 /* PhotoCollectionViewLayout.swift */,
-				D3D03FB82AF27571006BD5C8 /* ViewController.swift */,
+				C05A0C7B2D0460BF00F59A93 /* MediaCollectionViewLayout.swift */,
+				D3D03FB82AF27571006BD5C8 /* MediaViewController.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		C05A0C832D04704D00F59A93 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C842D04705C00F59A93 /* MediaService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		C05A0C862D0471CB00F59A93 /* Media */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C892D04721300F59A93 /* Presenter */,
+				C05A0C7A2D0460B400F59A93 /* UI */,
+			);
+			path = Media;
+			sourceTree = "<group>";
+		};
+		C05A0C872D0471DA00F59A93 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C882D0471E200F59A93 /* UI */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C05A0C882D0471E200F59A93 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C812D046E5E00F59A93 /* ReusableView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C05A0C892D04721300F59A93 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C8A2D04722500F59A93 /* MediaPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		C05A0C8C2D04732800F59A93 /* Launcher */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C8D2D04733300F59A93 /* ScreenFactory.swift */,
+				C05A0C7F2D046A1A00F59A93 /* AppLauncher.swift */,
+			);
+			path = Launcher;
+			sourceTree = "<group>";
+		};
+		C05A0C8F2D0473B700F59A93 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				C05A0C862D0471CB00F59A93 /* Media */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		D3D03FA82AF27571006BD5C8 = {
@@ -83,8 +146,10 @@
 		D3D03FB32AF27571006BD5C8 /* CodingSession */ = {
 			isa = PBXGroup;
 			children = (
-				C05A0C7F2D046A1A00F59A93 /* AppLauncher.swift */,
-				C05A0C7A2D0460B400F59A93 /* UI */,
+				C05A0C8C2D04732800F59A93 /* Launcher */,
+				C05A0C8F2D0473B700F59A93 /* Screens */,
+				C05A0C832D04704D00F59A93 /* Services */,
+				C05A0C872D0471DA00F59A93 /* Utilities */,
 				D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */,
 				D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */,
 				D3D03FBD2AF27572006BD5C8 /* Assets.xcassets */,
@@ -181,12 +246,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3D03FB92AF27571006BD5C8 /* ViewController.swift in Sources */,
-				C05A0C7C2D0460D000F59A93 /* PhotoCollectionViewLayout.swift in Sources */,
+				D3D03FB92AF27571006BD5C8 /* MediaViewController.swift in Sources */,
+				C05A0C7C2D0460D000F59A93 /* MediaCollectionViewLayout.swift in Sources */,
 				D3D03FB52AF27571006BD5C8 /* AppDelegate.swift in Sources */,
 				C05A0C7E2D04673500F59A93 /* MediaCollectionViewCell.swift in Sources */,
+				C05A0C8E2D04733900F59A93 /* ScreenFactory.swift in Sources */,
 				D3D03FB72AF27571006BD5C8 /* SceneDelegate.swift in Sources */,
+				C05A0C8B2D04722800F59A93 /* MediaPresenter.swift in Sources */,
 				C05A0C822D046E6100F59A93 /* ReusableView.swift in Sources */,
+				C05A0C852D04706000F59A93 /* MediaService.swift in Sources */,
 				C05A0C802D046A1E00F59A93 /* AppLauncher.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

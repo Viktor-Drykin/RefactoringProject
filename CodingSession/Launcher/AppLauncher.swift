@@ -15,7 +15,7 @@ class AppLauncher {
     }
 
     func initFirstScreen() {
-        window.rootViewController = ViewController()
+        window.rootViewController = ScreenFactory.makeMediaScreen()
     }
 
     func makeAppVisible() {

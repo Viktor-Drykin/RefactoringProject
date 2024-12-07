@@ -15,30 +15,9 @@ final class MediaViewController: UIViewController {
         static let loadingMessage = "Loading..."
         static let noDataMessage = "There is nothing to show."
     }
-
-    enum State {
-        case loading
-        case empty
-        case loaded
-    }
-
-    var presenter: MediaPresentable?
-
-    var state: State = .loading {
-        didSet {
-            collectionView.reloadData()
-            switch state {
-            case .loading:
-                loadingLabel.text = Constant.loadingMessage
-                loadingLabel.isHidden = false
-            case .empty:
-                loadingLabel.text = Constant.noDataMessage
-                loadingLabel.isHidden = false
-            case .loaded:
-                loadingLabel.isHidden = true
-            }
-        }
-    }
+    
+    private let viewModel: MediaViewModel
+    private let disposeBag = DisposeBag()
 
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
@@ -55,17 +34,26 @@ final class MediaViewController: UIViewController {
         return label
     }()
 
+    init(viewModel: MediaViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupViews()
-        presenter?.loadMediaAssets()
+        subscribe()
     }
 
     private func setupViews() {
+        view.backgroundColor = .white
         view.addSubview(collectionView)
         view.addSubview(loadingLabel)
-
         collectionView.dataSource = self
         collectionView.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: MediaCollectionViewCell.defaultReuseIdentifier)
 
@@ -81,6 +69,31 @@ final class MediaViewController: UIViewController {
             make.centerX.equalTo(self.view)
         }
     }
+
+    private func subscribe() {
+
+        viewModel.state.subscribe { [weak self] state in
+            self?.handle(state: state)
+            self?.collectionView.reloadData()
+        }
+        .disposed(by: disposeBag)
+
+        viewModel.loadMediaAssets()
+            .disposed(by: disposeBag)
+    }
+
+    private func handle(state: MediaViewModel.State) {
+        switch state {
+        case .loading:
+            loadingLabel.text = Constant.loadingMessage
+            loadingLabel.isHidden = false
+        case .empty:
+            loadingLabel.text = Constant.noDataMessage
+            loadingLabel.isHidden = false
+        case .loaded:
+            loadingLabel.isHidden = true
+        }
+    }
 }
 
 extension MediaViewController: UICollectionViewDataSource {
@@ -88,18 +101,15 @@ extension MediaViewController: UICollectionViewDataSource {
 
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.defaultReuseIdentifier, for: indexPath)
 
-        guard let cell = cell as? MediaCollectionViewCell else { return cell }
-
-        presenter?.getImage(for: indexPath,
-                            size: cell.bounds.size,
-                            completion: { [weak cell] image in
-            cell?.set(image: image)
-        })
-        cell.set(title: presenter?.getTitle(for: indexPath))
+        if let cell = cell as? MediaCollectionViewCell {
+            let imageObservable = viewModel.observeImage(for: indexPath, size: cell.bounds.size)
+            cell.bind(imageObservable: imageObservable)
+            cell.set(title: viewModel.getTitle(for: indexPath))
+        }
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        presenter?.assetsCount ?? 0
+        viewModel.assetsCount
     }
 }

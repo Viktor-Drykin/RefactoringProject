@@ -6,6 +6,8 @@
 //
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class MediaCollectionViewCell: UICollectionViewCell {
 
@@ -21,26 +23,30 @@ final class MediaCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    private var disposeBag = DisposeBag()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setup()
-        performLayout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        set(image: nil)
+        disposeBag = DisposeBag()
+        thumbImageView.image = nil
         set(title: nil)
     }
 
     private func setup() {
         contentView.addSubview(thumbImageView)
         contentView.addSubview(durationLabel)
+
+        performLayout()
     }
 
     private func performLayout() {
@@ -53,8 +59,10 @@ final class MediaCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    func set(image: UIImage?) {
-        thumbImageView.image = image
+    func bind(imageObservable: Observable<UIImage?>) {
+        imageObservable
+            .bind(to: thumbImageView.rx.image)
+            .disposed(by: disposeBag)
     }
 
     func set(title: String?) {

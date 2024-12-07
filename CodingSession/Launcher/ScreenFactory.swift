@@ -6,13 +6,12 @@
 //
 import UIKit
 
-enum ScreenFactory {
+enum FeatureFactory {
 
-    static func makeMediaScreen() -> UIViewController {
+    static func makeMediaFeature() -> UIViewController {
         let mediaService = MediaServiceImpl()
-        let view = MediaViewController()
-        let presenter = MediaPresenter(mediaService: mediaService, view: view)
-        view.presenter = presenter
+        let viewModel = MediaViewModel(mediaService: mediaService)
+        let view = MediaViewController(viewModel: viewModel)
         return view
     }
 }

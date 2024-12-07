@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class AppLauncher {
+final class AppLauncher {
 
     let window: UIWindow
 
@@ -15,10 +15,6 @@ class AppLauncher {
     }
 
     func initFirstScreen() {
-        window.rootViewController = ScreenFactory.makeMediaScreen()
-    }
-
-    func makeAppVisible() {
-        window.makeKeyAndVisible()
+        window.rootViewController = FeatureFactory.makeMediaFeature()
     }
 }

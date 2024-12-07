@@ -7,52 +7,51 @@
 
 import Photos
 import UIKit
+import RxSwift
 
 protocol MediaService {
-    func loadMediaAssets(completion: @escaping ([PHAsset]) -> Void)
-    func getImage(for asset: PHAsset, size: CGSize, completion: @escaping (UIImage?) -> Void)
+    func fetchMediaAssets() -> Single<[PHAsset]>
+    func fetchImage(for asset: PHAsset, size: CGSize) -> Single<UIImage?>
 }
 
-class MediaServiceImpl: MediaService {
+final class MediaServiceImpl: MediaService {
 
     enum Constant {
         static let mediaType = PHAssetMediaType.video
     }
 
-    func loadMediaAssets(completion: @escaping ([PHAsset]) -> Void) {
-        DispatchQueue.global().async {
+    func fetchMediaAssets() -> Single<[PHAsset]> {
+        Single<[PHAsset]>.create { single in
             let fetchOptions = PHFetchOptions()
             fetchOptions.predicate = NSPredicate(format: "mediaType == %d", Constant.mediaType.rawValue)
-            let fetchResult = PHAsset.fetchAssets(with: fetchOptions)
-            var assets: [PHAsset] = []
 
-            fetchResult.enumerateObjects { (asset, _, _) in
+            var assets: [PHAsset] = []
+            PHAsset
+                .fetchAssets(with: fetchOptions)
+                .enumerateObjects { (asset, _, _) in
                 assets.append(asset)
             }
-            DispatchQueue.main.async {
-                completion(assets)
-            }
+            single(.success(assets))
+            return Disposables.create()
         }
     }
 
-    func getImage(for asset: PHAsset, size: CGSize, completion: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global().async {
-            let manager = PHImageManager.default()
-            let requestOptions = PHImageRequestOptions()
-            requestOptions.isSynchronous = true
-            requestOptions.deliveryMode = .highQualityFormat
-
-            manager.requestImage(
+    func fetchImage(for asset: PHAsset, size: CGSize) -> Single<UIImage?> {
+        Single<UIImage?>.create { single in
+            let requestOptions = {
+                let requestOptions = PHImageRequestOptions()
+                requestOptions.isSynchronous = false
+                requestOptions.deliveryMode = .highQualityFormat
+                return requestOptions
+            }()
+            PHImageManager.default().requestImage(
                 for: asset,
                 targetSize: size,
                 contentMode: .aspectFill,
                 options: requestOptions) { (image, _) in
-                    DispatchQueue.main.async {
-                        completion(image)
-                    }
+                    single(.success(image))
                 }
+            return Disposables.create()
         }
     }
-
 }
-

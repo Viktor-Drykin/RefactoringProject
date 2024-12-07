@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         appLauncher = .init(with: windowScene.coordinateSpace.bounds)
         appLauncher?.window.windowScene = windowScene
         appLauncher?.initFirstScreen()
-        appLauncher?.makeAppVisible()
+        appLauncher?.window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

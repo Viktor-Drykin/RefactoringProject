@@ -14,6 +14,7 @@ final class MediaViewController: UIViewController {
     enum Constant {
         static let loadingMessage = "Loading..."
         static let noDataMessage = "There is nothing to show."
+        static let notAuthorized = "Provide an access to a photo gallery."
     }
     
     private let viewModel: MediaViewModel
@@ -24,7 +25,6 @@ final class MediaViewController: UIViewController {
             frame: .zero,
             collectionViewLayout: MediaCollectionViewLayout()
         )
-        collectionView.backgroundColor = .gray
         return collectionView
     }()
 
@@ -71,14 +71,14 @@ final class MediaViewController: UIViewController {
     }
 
     private func subscribe() {
-
-        viewModel.state.subscribe { [weak self] state in
-            self?.handle(state: state)
-            self?.collectionView.reloadData()
-        }
-        .disposed(by: disposeBag)
-
         viewModel.loadMediaAssets()
+            .disposed(by: disposeBag)
+
+        viewModel.state
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] state in
+                self?.handle(state: state)
+            }
             .disposed(by: disposeBag)
     }
 
@@ -92,7 +92,11 @@ final class MediaViewController: UIViewController {
             loadingLabel.isHidden = false
         case .loaded:
             loadingLabel.isHidden = true
+        case .noAuthorized:
+            loadingLabel.text = Constant.notAuthorized
+            loadingLabel.isHidden = false
         }
+        collectionView.reloadData()
     }
 }
 

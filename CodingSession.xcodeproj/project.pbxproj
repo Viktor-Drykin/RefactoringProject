@@ -14,6 +14,7 @@
 		C05A0C852D04706000F59A93 /* MediaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C842D04705C00F59A93 /* MediaService.swift */; };
 		C05A0C8B2D04722800F59A93 /* MediaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C8A2D04722500F59A93 /* MediaViewModel.swift */; };
 		C05A0C8E2D04733900F59A93 /* ScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C8D2D04733300F59A93 /* ScreenFactory.swift */; };
+		C05A0C932D04C33E00F59A93 /* PhotoAuthorisationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C05A0C922D04C33700F59A93 /* PhotoAuthorisationProvider.swift */; };
 		D3D03FB52AF27571006BD5C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */; };
 		D3D03FB72AF27571006BD5C8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */; };
 		D3D03FB92AF27571006BD5C8 /* MediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D03FB82AF27571006BD5C8 /* MediaViewController.swift */; };
@@ -33,6 +34,7 @@
 		C05A0C842D04705C00F59A93 /* MediaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaService.swift; sourceTree = "<group>"; };
 		C05A0C8A2D04722500F59A93 /* MediaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaViewModel.swift; sourceTree = "<group>"; };
 		C05A0C8D2D04733300F59A93 /* ScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenFactory.swift; sourceTree = "<group>"; };
+		C05A0C922D04C33700F59A93 /* PhotoAuthorisationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAuthorisationProvider.swift; sourceTree = "<group>"; };
 		D3D03FB12AF27571006BD5C8 /* CodingSession.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodingSession.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D03FB42AF27571006BD5C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3D03FB62AF27571006BD5C8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 		C05A0C832D04704D00F59A93 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				C05A0C922D04C33700F59A93 /* PhotoAuthorisationProvider.swift */,
 				C05A0C842D04705C00F59A93 /* MediaService.swift */,
 			);
 			path = Services;
@@ -254,6 +257,7 @@
 				D3D03FB72AF27571006BD5C8 /* SceneDelegate.swift in Sources */,
 				C05A0C8B2D04722800F59A93 /* MediaViewModel.swift in Sources */,
 				C05A0C822D046E6100F59A93 /* ReusableView.swift in Sources */,
+				C05A0C932D04C33E00F59A93 /* PhotoAuthorisationProvider.swift in Sources */,
 				C05A0C852D04706000F59A93 /* MediaService.swift in Sources */,
 				C05A0C802D046A1E00F59A93 /* AppLauncher.swift in Sources */,
 			);

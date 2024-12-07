@@ -12,6 +12,7 @@ import UIKit
 final class MediaViewModel {
 
     enum State {
+        case noAuthorized
         case loading
         case empty
         case loaded
@@ -21,21 +22,29 @@ final class MediaViewModel {
     var assetsCount: Int { assets.count }
 
     private let mediaService: MediaService
+    private let photoAuthorisationProvider: PhotoAuthorisationProvider
     private var assets: [PHAsset] = []
 
-    init(mediaService: MediaService) {
+    init(mediaService: MediaService, photoAuthorisationProvider: PhotoAuthorisationProvider) {
+        self.photoAuthorisationProvider = photoAuthorisationProvider
         self.mediaService = mediaService
     }
 
     func loadMediaAssets() -> Disposable {
-        state.onNext(.loading)
-        return mediaService.fetchMediaAssets()
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .observe(on: MainScheduler.instance)
-            .subscribe(onSuccess: { [weak self] assets in
-                self?.assets = assets
-                self?.state.onNext(assets.isEmpty ? .empty : .loaded)
+        photoAuthorisationProvider.checkIfAllowed()
+            .do(onNext: { [weak self] isAuthorized in
+                self?.state.onNext(isAuthorized ? .loading : .noAuthorized)
             })
+            .filter { $0 }
+            .flatMap { [weak self] state in
+                guard let self else { return Observable.just([PHAsset]()) }
+                return self.mediaService.fetchMediaAssets()
+            }
+            .do(onNext: { [weak self] assets in
+                self?.assets = assets
+            })
+            .map { $0.isEmpty ? .empty : .loaded }
+            .bind(to: state)
     }
 
     func observeImage(for indexPath: IndexPath, size: CGSize) -> Observable<UIImage?> {

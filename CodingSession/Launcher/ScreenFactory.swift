@@ -10,7 +10,8 @@ enum FeatureFactory {
 
     static func makeMediaFeature() -> UIViewController {
         let mediaService = MediaServiceImpl()
-        let viewModel = MediaViewModel(mediaService: mediaService)
+        let photoProvider = PhotoAuthorisationProviderImpl()
+        let viewModel = MediaViewModel(mediaService: mediaService, photoAuthorisationProvider: photoProvider)
         let view = MediaViewController(viewModel: viewModel)
         return view
     }

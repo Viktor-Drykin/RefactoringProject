@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 protocol MediaService {
-    func fetchMediaAssets() -> Single<[PHAsset]>
+    func fetchMediaAssets() -> Observable<[PHAsset]>
     func fetchImage(for asset: PHAsset, size: CGSize) -> Single<UIImage?>
 }
 
@@ -20,7 +20,7 @@ final class MediaServiceImpl: MediaService {
         static let mediaType = PHAssetMediaType.video
     }
 
-    func fetchMediaAssets() -> Single<[PHAsset]> {
+    func fetchMediaAssets() -> Observable<[PHAsset]> {
         Single<[PHAsset]>.create { single in
             let fetchOptions = PHFetchOptions()
             fetchOptions.predicate = NSPredicate(format: "mediaType == %d", Constant.mediaType.rawValue)
@@ -34,6 +34,7 @@ final class MediaServiceImpl: MediaService {
             single(.success(assets))
             return Disposables.create()
         }
+        .asObservable()
     }
 
     func fetchImage(for asset: PHAsset, size: CGSize) -> Single<UIImage?> {

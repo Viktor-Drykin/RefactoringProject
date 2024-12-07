@@ -5,12 +5,23 @@
 //  Created by Viktor Drykin on 07.12.2024.
 //
 import UIKit
+import SnapKit
 
-class MediaCollectionViewCell: UICollectionViewCell {
+final class MediaCollectionViewCell: UICollectionViewCell {
 
-    var thumbImageView: UIImageView!
-    var durationLabel: UILabel!
-    
+    private lazy var thumbImageView: UIImageView = {
+        let imageView  = UIImageView(frame: .zero)
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+
+    private lazy var durationLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        return label
+    }()
+
+    //TODO: remove this
     var image: UIImage! {
         didSet {
             thumbImageView.image = image
@@ -26,24 +37,26 @@ class MediaCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        thumbImageView = UIImageView(frame: .zero)
-        contentView.addSubview(thumbImageView)
-        thumbImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        thumbImageView.contentMode = .scaleAspectFill
-        thumbImageView.clipsToBounds = true
-        
-        durationLabel = UILabel(frame: .zero)
-        contentView.addSubview(durationLabel)
-        durationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(8)
-            make.bottom.equalTo(-8)
-        }
+        setup()
+        performLayout()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    private func setup() {
+        contentView.addSubview(thumbImageView)
+        contentView.addSubview(durationLabel)
+    }
+
+    private func performLayout() {
+        thumbImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        durationLabel.snp.makeConstraints { make in
+            make.leading.equalTo(8)
+            make.bottom.equalTo(-8)
+        }
+    }
 }

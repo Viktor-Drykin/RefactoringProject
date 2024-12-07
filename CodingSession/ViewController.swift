@@ -11,7 +11,7 @@ import SnapKit
 import Accelerate
 import Photos
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var collectionView: UICollectionView!
     
@@ -24,15 +24,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: MediaCollectionViewLayout())
         view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-        collectionView.register(ViewControllerCell.self, forCellWithReuseIdentifier: "ViewControllerCell")
-        
+        collectionView.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: "MediaCollectionViewCell")
+
         let fetchOptions = PHFetchOptions()
-        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.video.rawValue)
+        fetchOptions.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
         
         let fetchResult = PHAsset.fetchAssets(with: fetchOptions)
         var videoAssets: [PHAsset] = []
@@ -49,8 +49,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell: ViewControllerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ViewControllerCell", for: indexPath) as! ViewControllerCell
-        
+        let cell: MediaCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "MediaCollectionViewCell", for: indexPath) as! MediaCollectionViewCell
+
         let asset = self.assets[indexPath.row]
         
         let manager = PHImageManager.default()
@@ -78,62 +78,4 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.assets.count
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: UIScreen.main.bounds.width / 3, height: UIScreen.main.bounds.width / 3)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .zero
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-}
-
-class ViewControllerCell: UICollectionViewCell {
-    
-    var thumbImageView: UIImageView!
-    var durationLabel: UILabel!
-    
-    var image: UIImage! {
-        didSet {
-            thumbImageView.image = image
-        }
-    }
-    
-    var title: String! {
-        didSet {
-            durationLabel.text = title
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        thumbImageView = UIImageView(frame: .zero)
-        contentView.addSubview(thumbImageView)
-        thumbImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        thumbImageView.contentMode = .scaleAspectFill
-        thumbImageView.clipsToBounds = true
-        
-        durationLabel = UILabel(frame: .zero)
-        contentView.addSubview(durationLabel)
-        durationLabel.snp.makeConstraints { make in
-            make.leading.equalTo(8)
-            make.bottom.equalTo(-8)
-        }
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
 }

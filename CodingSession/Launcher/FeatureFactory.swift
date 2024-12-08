@@ -7,7 +7,7 @@
 import UIKit
 
 enum FeatureFactory {
-
+    
     static func makeMediaFeature() -> UIViewController {
         let mediaService = MediaServiceImpl()
         let photoProvider = PhotoAuthorisationProviderImpl()

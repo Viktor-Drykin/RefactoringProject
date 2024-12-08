@@ -10,7 +10,7 @@ import RxSwift
 import SnapKit
 
 final class MediaViewController: UIViewController {
-
+    
     enum Constant {
         static let loadingMessage = "Loading..."
         static let noDataMessage = "There is nothing to show."
@@ -19,7 +19,7 @@ final class MediaViewController: UIViewController {
     
     private let viewModel: MediaViewModel
     private let disposeBag = DisposeBag()
-
+    
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -27,13 +27,13 @@ final class MediaViewController: UIViewController {
         )
         return collectionView
     }()
-
+    
     private lazy var loadingLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.textAlignment = .center
         return label
     }()
-
+    
     init(viewModel: MediaViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -45,21 +45,21 @@ final class MediaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupViews()
         subscribe()
     }
-
+    
     private func setupViews() {
         view.backgroundColor = .white
         view.addSubview(collectionView)
         view.addSubview(loadingLabel)
         collectionView.dataSource = self
         collectionView.register(MediaCollectionViewCell.self, forCellWithReuseIdentifier: MediaCollectionViewCell.defaultReuseIdentifier)
-
+        
         setupLayout()
     }
-
+    
     private func setupLayout() {
         collectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -69,11 +69,11 @@ final class MediaViewController: UIViewController {
             make.centerX.equalTo(self.view)
         }
     }
-
+    
     private func subscribe() {
         viewModel.loadMediaAssets()
             .disposed(by: disposeBag)
-
+        
         viewModel.state
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] state in
@@ -81,7 +81,7 @@ final class MediaViewController: UIViewController {
             }
             .disposed(by: disposeBag)
     }
-
+    
     private func handle(state: MediaViewModel.State) {
         switch state {
         case .loading:
@@ -102,9 +102,9 @@ final class MediaViewController: UIViewController {
 
 extension MediaViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MediaCollectionViewCell.defaultReuseIdentifier, for: indexPath)
-
+        
         if let cell = cell as? MediaCollectionViewCell {
             let imageObservable = viewModel.observeImage(for: indexPath, size: cell.bounds.size)
             cell.bind(imageObservable: imageObservable)
@@ -112,7 +112,7 @@ extension MediaViewController: UICollectionViewDataSource {
         }
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         viewModel.assetsCount
     }

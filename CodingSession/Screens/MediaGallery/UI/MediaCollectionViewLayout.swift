@@ -7,7 +7,7 @@
 import UIKit
 
 final class MediaCollectionViewLayout: UICollectionViewFlowLayout {
-
+    
     override func prepare() {
         super.prepare()
         guard let collectionView else { return }

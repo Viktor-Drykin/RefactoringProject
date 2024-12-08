@@ -29,8 +29,8 @@ final class MediaServiceImpl: MediaService {
             PHAsset
                 .fetchAssets(with: fetchOptions)
                 .enumerateObjects { (asset, _, _) in
-                assets.append(asset)
-            }
+                    assets.append(asset)
+                }
             single(.success(assets))
             return Disposables.create()
         }

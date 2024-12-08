@@ -25,7 +25,7 @@ class PhotoAuthorisationProviderImpl: PhotoAuthorisationProvider {
                     observable.onNext(false)
                 }
             }
-
+            
             return Disposables.create()
         }
     }
